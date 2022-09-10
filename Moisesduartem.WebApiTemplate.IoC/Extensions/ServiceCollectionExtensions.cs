@@ -11,7 +11,8 @@ namespace Moisesduartem.WebApiTemplate.IoC.Extensions
             new DependencyBuilder(configurationManager, services)
                 .AddAutoMapper()
                 .AddMediatR()
-                .AddFluentValidation();
+                .AddFluentValidation()
+                .AddRepositories();
         }
     }
 }

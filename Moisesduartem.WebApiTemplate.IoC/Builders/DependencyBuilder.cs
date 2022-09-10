@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Moisesduartem.WebApiTemplate.Domain.V1.Users.Repositories;
+using Moisesduartem.WebApiTemplate.Infra.Repositories;
 
 namespace Moisesduartem.WebApiTemplate.IoC.Builders
 {
@@ -37,6 +39,13 @@ namespace Moisesduartem.WebApiTemplate.IoC.Builders
         public DependencyBuilder AddAutoMapper()
         {
             _services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            return this;
+        }
+
+        public DependencyBuilder AddRepositories()
+        {
+            _services.AddScoped<IUserRepository, UserRepository>();
+
             return this;
         }
 
