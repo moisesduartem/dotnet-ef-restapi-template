@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentValidation.AspNetCore" Version="11.2.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Moisesduartem.WebApiTemplate.Domain\Moisesduartem.WebApiTemplate.Domain.csproj" />
   </ItemGroup>
 
