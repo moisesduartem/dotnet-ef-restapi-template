@@ -21,6 +21,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moisesduartem.WebApiTemplat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moisesduartem.WebApiTemplate.Application.Tests", "Moisesduartem.WebApiTemplate.Application.Tests\Moisesduartem.WebApiTemplate.Application.Tests.csproj", "{520EB7F5-5EF3-4D74-BDBC-A64BE364A872}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2466FB86-853D-47BF-9814-07FF612EFA63}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
