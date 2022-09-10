@@ -11,8 +11,4 @@
     <ProjectReference Include="..\Moisesduartem.WebApiTemplate.Domain\Moisesduartem.WebApiTemplate.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Repositories\" />
-  </ItemGroup>
-
 </Project>
