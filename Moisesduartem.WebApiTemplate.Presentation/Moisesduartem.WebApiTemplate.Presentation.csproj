@@ -13,10 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="V1\Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Moisesduartem.WebApiTemplate.IoC\Moisesduartem.WebApiTemplate.IoC.csproj" />
   </ItemGroup>
 

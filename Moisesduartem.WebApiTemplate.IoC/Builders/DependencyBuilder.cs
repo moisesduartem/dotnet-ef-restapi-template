@@ -1,5 +1,7 @@
 ﻿using FluentValidation;
 using MediatR;
+using Microsoft.AspNetCore.Mvc.Versioning;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -14,6 +16,22 @@ namespace Moisesduartem.WebApiTemplate.IoC.Builders
         {
             _configuration = configuration;
             _services = services;
+        }
+
+        public DependencyBuilder AddApiVersioning()
+        {
+            _services.AddApiVersioning(options =>
+            {
+                options.DefaultApiVersion = new ApiVersion(1, 0);
+                options.ReportApiVersions = true;
+                options.AssumeDefaultVersionWhenUnspecified = true;
+                options.ApiVersionReader = ApiVersionReader.Combine(
+                    new HeaderApiVersionReader("api-version"),
+                    new UrlSegmentApiVersionReader()
+                );
+            });
+
+            return this;
         }
 
         public DependencyBuilder AddAutoMapper()
