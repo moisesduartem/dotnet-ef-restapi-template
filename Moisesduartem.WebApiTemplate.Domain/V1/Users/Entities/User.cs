@@ -10,5 +10,14 @@ namespace Moisesduartem.WebApiTemplate.Domain.V1.Users.Entities
         public string Username { get; private set; }
         public string PasswordHash { get; private set; }
         public EAccountRole Role { get; private set; }
+
+        public User(string name, string email, string username, string passwordHash)
+        {
+            Name = name;
+            Email = email;
+            Username = username;
+            PasswordHash = passwordHash;
+            Role = EAccountRole.User;
+        }
     }
 }
