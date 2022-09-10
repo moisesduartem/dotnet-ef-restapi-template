@@ -11,7 +11,7 @@ namespace Moisesduartem.WebApiTemplate.IoC.Extensions
 {
     public static class ServiceCollectionExtensions
     {
-        public static void AddInfrastructureConfiguration(this IServiceCollection services, ConfigurationManager configurationManager)
+        public static void AddCrossCuttingConfiguration(this IServiceCollection services, ConfigurationManager configurationManager)
         {
             new DependencyBuilder(configurationManager, services)
                 .AddAutoMapper()
