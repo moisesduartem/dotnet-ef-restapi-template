@@ -3,7 +3,7 @@ using Moisesduartem.WebApiTemplate.Domain.V1.Users.Enums;
 
 namespace Moisesduartem.WebApiTemplate.Domain.V1.Users.Entities
 {
-    public class User : Entity, IAggregateRoot
+    public class User : Entity<User>, IAggregateRoot
     {
         public string Name { get; private set; }
         public string Email { get; private set; }
@@ -18,6 +18,11 @@ namespace Moisesduartem.WebApiTemplate.Domain.V1.Users.Entities
             Username = username;
             PasswordHash = passwordHash;
             Role = EAccountRole.User;
+        }
+
+        public override void Validate()
+        {
+            ValidationResult = Validator.Validate(this);
         }
     }
 }
