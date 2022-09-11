@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Moisesduartem.WebApiTemplate.Application\Moisesduartem.WebApiTemplate.Application.csproj" />
+    <ProjectReference Include="..\..\src\Moisesduartem.WebApiTemplate.Domain\Moisesduartem.WebApiTemplate.Domain.csproj" />
   </ItemGroup>
 
 </Project>
