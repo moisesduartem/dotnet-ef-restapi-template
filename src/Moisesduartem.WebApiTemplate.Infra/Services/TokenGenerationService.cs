@@ -12,7 +12,7 @@ namespace Moisesduartem.WebApiTemplate.Infra.Services
         public string GenerateFor(User user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes("MYSECRET");
+            var key = Encoding.ASCII.GetBytes("fedaf7d8863b48e197b9287d492b708e");
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]

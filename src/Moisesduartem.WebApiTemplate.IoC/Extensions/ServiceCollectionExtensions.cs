@@ -12,7 +12,8 @@ namespace Moisesduartem.WebApiTemplate.IoC.Extensions
                 .AddAutoMapper()
                 .AddMediatR()
                 .AddFluentValidation()
-                .AddRepositories();
+                .AddJwtAuthentication()
+                .AddInjectedDependencies();
         }
     }
 }

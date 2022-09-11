@@ -3,6 +3,6 @@
     public class LoginDTO
     {
         public LoggedUserDTO User { get; set; }
-        public string token { get; set; }
+        public string Token { get; set; }
     }
 }
