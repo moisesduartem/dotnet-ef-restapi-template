@@ -9,6 +9,7 @@ namespace Moisesduartem.WebApiTemplate.IoC.Extensions
         public static void AddCrossCuttingConfiguration(this IServiceCollection services, ConfigurationManager configurationManager)
         {
             new DependencyBuilder(configurationManager, services)
+                .AddDatabase()
                 .AddAutoMapper()
                 .AddMediatR()
                 .AddFluentValidation()

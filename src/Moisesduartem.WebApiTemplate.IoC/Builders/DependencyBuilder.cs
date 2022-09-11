@@ -4,16 +4,20 @@ using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Moisesduartem.WebApiTemplate.Application.V1.Options;
 using Moisesduartem.WebApiTemplate.Application.V1.Services;
 using Moisesduartem.WebApiTemplate.Application.V1.Users.Handlers;
 using Moisesduartem.WebApiTemplate.Domain.V1.Users.Repositories;
-using Moisesduartem.WebApiTemplate.Infra.MappingProfiles;
+using Moisesduartem.WebApiTemplate.Infra.Context;
+using Moisesduartem.WebApiTemplate.Infra.Profiles;
 using Moisesduartem.WebApiTemplate.Infra.Repositories;
 using Moisesduartem.WebApiTemplate.Infra.Services;
+using Serilog;
 using System.Text;
 
 namespace Moisesduartem.WebApiTemplate.IoC.Builders
@@ -27,6 +31,19 @@ namespace Moisesduartem.WebApiTemplate.IoC.Builders
         {
             _configuration = configuration;
             _services = services;
+        }
+
+        public DependencyBuilder AddDatabase()
+        {
+            string connection = _configuration.GetConnectionString("DefaultConnection");
+
+            _services.AddDbContext<ApplicationDbContext>(options =>
+            {
+                options.UseSqlServer(connection);
+                options.LogTo(Log.Logger.Information, LogLevel.Information, null);
+            });
+
+            return this;
         }
 
         public DependencyBuilder AddApiVersioning()

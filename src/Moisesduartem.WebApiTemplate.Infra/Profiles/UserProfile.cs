@@ -2,7 +2,7 @@
 using Moisesduartem.WebApiTemplate.Application.V1.Users.DTOs;
 using Moisesduartem.WebApiTemplate.Domain.V1.Users.Entities;
 
-namespace Moisesduartem.WebApiTemplate.Infra.MappingProfiles
+namespace Moisesduartem.WebApiTemplate.Infra.Profiles
 {
     public class UserProfile : Profile
     {
