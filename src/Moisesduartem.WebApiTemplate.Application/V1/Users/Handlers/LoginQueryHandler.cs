@@ -25,7 +25,7 @@ namespace Moisesduartem.WebApiTemplate.Application.V1.Users.Handlers
         public async Task<Result<LoginDTO>> Handle(LoginQuery request, CancellationToken cancellationToken)
         {
             var user = await _userRepository.GetByEmailAsync(request.Email, cancellationToken);
-            user = null;
+            
             if (user == null || user.PasswordHash != request.Password)
             {
                 return Result<LoginDTO>.Create().Error("Login", "Invalid email and/or password");
