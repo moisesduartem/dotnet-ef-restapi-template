@@ -1,4 +1,6 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using Moisesduartem.WebApiTemplate.Application.V1.Options;
 using Moisesduartem.WebApiTemplate.Application.V1.Services;
 using Moisesduartem.WebApiTemplate.Domain.V1.Users.Entities;
 using System.IdentityModel.Tokens.Jwt;
@@ -9,10 +11,17 @@ namespace Moisesduartem.WebApiTemplate.Infra.Services
 {
     public class TokenGenerationService : ITokenGenerationService
     {
+        private readonly string _secret;
+
+        public TokenGenerationService(IOptions<AuthenticationOptions> options)
+        {
+            _secret = options.Value.Secret;
+        }
+
         public string GenerateFor(User user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes("fedaf7d8863b48e197b9287d492b708e");
+            var key = Encoding.ASCII.GetBytes(_secret);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]

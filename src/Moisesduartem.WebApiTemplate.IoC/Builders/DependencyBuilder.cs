@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Moisesduartem.WebApiTemplate.Application.V1.Options;
 using Moisesduartem.WebApiTemplate.Application.V1.Services;
 using Moisesduartem.WebApiTemplate.Application.V1.Users.Handlers;
 using Moisesduartem.WebApiTemplate.Domain.V1.Users.Repositories;
@@ -78,7 +79,11 @@ namespace Moisesduartem.WebApiTemplate.IoC.Builders
         
         public DependencyBuilder AddJwtAuthentication()
         {
-            var secretKey = Encoding.ASCII.GetBytes("fedaf7d8863b48e197b9287d492b708e");
+            var authenticationSection = _configuration.GetSection("Authentication");
+
+            var secretKey = Encoding.ASCII.GetBytes(authenticationSection.GetValue<string>("Secret"));
+
+            _services.Configure<AuthenticationOptions>(authenticationSection);
 
             _services
                 .AddHttpContextAccessor()
