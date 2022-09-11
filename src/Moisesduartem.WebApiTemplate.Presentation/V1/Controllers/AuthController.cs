@@ -20,14 +20,15 @@ namespace Moisesduartem.WebApiTemplate.Presentation.V1.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginQuery query, CancellationToken cancellationToken)
         {
+            throw new Exception();
             var result = await _mediator.Send(query, cancellationToken);
             
-            if (result.IsSuccess)
+            if (result.IsValid)
             {
                 return Ok(result.Value);
             }
 
-            return BadRequest(result.Errors);
+            return BadRequest(result);
         }
     }
 }

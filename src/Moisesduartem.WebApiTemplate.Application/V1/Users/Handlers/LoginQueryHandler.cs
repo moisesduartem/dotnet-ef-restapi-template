@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using FluentResults;
 using MediatR;
 using Moisesduartem.WebApiTemplate.Application.V1.Services;
+using Moisesduartem.WebApiTemplate.Application.V1.Shared;
 using Moisesduartem.WebApiTemplate.Application.V1.Users.DTOs;
 using Moisesduartem.WebApiTemplate.Application.V1.Users.Queries;
 using Moisesduartem.WebApiTemplate.Domain.V1.Users.Entities;
@@ -25,10 +25,10 @@ namespace Moisesduartem.WebApiTemplate.Application.V1.Users.Handlers
         public async Task<Result<LoginDTO>> Handle(LoginQuery request, CancellationToken cancellationToken)
         {
             var user = await _userRepository.GetByEmailAsync(request.Email, cancellationToken);
-
+            user = null;
             if (user == null || user.PasswordHash != request.Password)
             {
-                return Result.Fail<LoginDTO>(new Error("Invalid email and/or password"));
+                return Result<LoginDTO>.Create().Error("Login", "Invalid email and/or password");
             }
 
             string token = _tokenGenerationService.GenerateFor(user);
@@ -36,7 +36,7 @@ namespace Moisesduartem.WebApiTemplate.Application.V1.Users.Handlers
             var loginDto = _mapper.Map<User, LoginDTO>(user);
             loginDto = _mapper.Map(token, loginDto);
 
-            return Result.Ok(loginDto);
+            return Result<LoginDTO>.Create().Ok(loginDto);
         }
     }
 }

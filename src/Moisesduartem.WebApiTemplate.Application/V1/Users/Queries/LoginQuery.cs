@@ -1,5 +1,5 @@
-﻿using FluentResults;
-using MediatR;
+﻿using MediatR;
+using Moisesduartem.WebApiTemplate.Application.V1.Shared;
 using Moisesduartem.WebApiTemplate.Application.V1.Users.DTOs;
 
 namespace Moisesduartem.WebApiTemplate.Application.V1.Users.Queries

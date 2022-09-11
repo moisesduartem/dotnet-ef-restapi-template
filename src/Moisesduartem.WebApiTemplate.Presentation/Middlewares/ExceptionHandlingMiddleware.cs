@@ -1,4 +1,4 @@
-﻿using FluentResults;
+﻿using Moisesduartem.WebApiTemplate.Application.V1.Shared;
 using System.Net;
 
 namespace Moisesduartem.WebApiTemplate.Presentation.Middlewares
@@ -33,7 +33,7 @@ namespace Moisesduartem.WebApiTemplate.Presentation.Middlewares
             response.ContentType = "application/json";
             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
             
-            var result = Result.Fail(new Error("Failed to process the request"));
+            var result = Result<object>.Create().Error("UnexpectedError", "Failed to process the request");
 
             return response.WriteAsJsonAsync(result);
         }
