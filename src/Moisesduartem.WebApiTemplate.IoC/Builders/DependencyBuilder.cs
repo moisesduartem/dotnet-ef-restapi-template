@@ -2,7 +2,6 @@
 using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.DataProtection.KeyManagement;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Configuration;
@@ -57,7 +56,10 @@ namespace Moisesduartem.WebApiTemplate.IoC.Builders
         public DependencyBuilder AddInjectedDependencies()
         {
             _services.AddScoped<IUserRepository, UserRepository>();
+            
             _services.AddScoped<ITokenGenerationService, TokenGenerationService>();
+            _services.AddScoped<IAuthenticatedUserService, AuthenticatedUserService>();
+
             return this;
         }
 
@@ -79,6 +81,7 @@ namespace Moisesduartem.WebApiTemplate.IoC.Builders
             var secretKey = Encoding.ASCII.GetBytes("fedaf7d8863b48e197b9287d492b708e");
 
             _services
+                .AddHttpContextAccessor()
                 .AddAuthentication(x =>
                 {
                     x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
