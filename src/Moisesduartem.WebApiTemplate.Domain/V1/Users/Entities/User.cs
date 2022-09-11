@@ -10,6 +10,8 @@ namespace Moisesduartem.WebApiTemplate.Domain.V1.Users.Entities
         public string Username { get; private set; }
         public string PasswordHash { get; private set; }
         public EAccountRole Role { get; private set; }
+        public DateTime CreateDate { get; private set; }
+        public DateTime UpdateDate { get; private set; }
 
         public User(string name, string email, string username, string passwordHash)
         {
@@ -18,6 +20,8 @@ namespace Moisesduartem.WebApiTemplate.Domain.V1.Users.Entities
             Username = username;
             PasswordHash = passwordHash;
             Role = EAccountRole.User;
+            CreateDate = DateTime.Now;
+            UpdateDate = DateTime.Now;
         }
 
         public override void Validate()
