@@ -1,13 +1,15 @@
-using Moisesduartem.WebApiTemplate.Presentation.Extensions;
+global using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.OpenApi.Models;
+using Moisesduartem.WebApiTemplate.Infra.Profiles;
+using Moisesduartem.WebApiTemplate.Presentation.Extensions;
 using Moisesduartem.WebApiTemplate.Presentation.Filters;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Host.UseSerilog((ctx, cfg) => cfg.WriteTo.Console());
-
-builder.Services.AddInfrastructure(builder.Configuration);
 
 builder.Services
     .AddControllers(options =>
@@ -19,6 +21,33 @@ builder.Services
         options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
         options.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
     });
+
+builder.Services.AddEFCoreConfiguration(builder.Configuration);
+
+builder.Services.AddApiVersioning(options =>
+{
+    options.DefaultApiVersion = new ApiVersion(1, 0);
+    options.ReportApiVersions = true;
+    options.AssumeDefaultVersionWhenUnspecified = true;
+    options.ApiVersionReader = ApiVersionReader.Combine(
+        new HeaderApiVersionReader("api-version"),
+        new UrlSegmentApiVersionReader()
+    );
+});
+
+builder.Services.AddDIConfiguration();
+
+builder.Services.AddFluentValidationConfiguration();
+
+builder.Services.AddMediatorConfiguration();
+
+builder.Services.AddJwtConfiguration(builder.Configuration);
+
+builder.Services.AddAutoMapper(cfg =>
+{
+    cfg.AddProfile<UserProfile>();
+});
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
