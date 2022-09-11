@@ -10,6 +10,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2466FB86-853D-47BF-9814-07FF612EFA63}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		.gitignore = .gitignore
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Moisesduartem.WebApiTemplate.Domain", "src\Moisesduartem.WebApiTemplate.Domain\Moisesduartem.WebApiTemplate.Domain.csproj", "{9EEE499D-2331-449F-B55B-BC04C2EE944B}"
