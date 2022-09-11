@@ -47,5 +47,19 @@ namespace Moisesduartem.WebApiTemplate.Presentation.V1.Controllers
 
             return BadRequest(user);
         }
+
+        [HttpGet("admin")]
+        [Authorize(Roles = "Admin")]
+        public IActionResult VerifyAdminRole()
+        {
+            return NoContent();
+        }
+        
+        [HttpGet("user")]
+        [Authorize(Roles = "User")]
+        public IActionResult VerifyUserRole()
+        {
+            return NoContent();
+        }
     }
 }
