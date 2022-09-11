@@ -5,6 +5,10 @@ namespace Moisesduartem.WebApiTemplate.Infra.Context
 {
     public class ApplicationDbContext : DbContext
     {
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
+        {
+        }
+
         public DbSet<User> Users { get; set; }
     }
 }

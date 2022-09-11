@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Moisesduartem.WebApiTemplate.IoC\Moisesduartem.WebApiTemplate.IoC.csproj" />
+    <ProjectReference Include="..\Moisesduartem.WebApiTemplate.Infra\Moisesduartem.WebApiTemplate.Infra.csproj" />
   </ItemGroup>
 
 </Project>

@@ -5,9 +5,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Moisesduartem.WebApiTemplate.Application.V1.Options;
 using Moisesduartem.WebApiTemplate.Application.V1.Services;
@@ -20,7 +17,7 @@ using Moisesduartem.WebApiTemplate.Infra.Services;
 using Serilog;
 using System.Text;
 
-namespace Moisesduartem.WebApiTemplate.IoC.Builders
+namespace Moisesduartem.WebApiTemplate.Presentation.Builders
 {
     public class DependencyBuilder
     {
@@ -35,11 +32,9 @@ namespace Moisesduartem.WebApiTemplate.IoC.Builders
 
         public DependencyBuilder AddDatabase()
         {
-            string connection = _configuration.GetConnectionString("DefaultConnection");
-
             _services.AddDbContext<ApplicationDbContext>(options =>
             {
-                options.UseSqlServer(connection);
+                options.UseSqlServer(_configuration.GetConnectionString("DefaultConnection"));
                 options.LogTo(Log.Logger.Information, LogLevel.Information, null);
             });
 

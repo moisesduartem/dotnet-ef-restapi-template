@@ -1,5 +1,5 @@
+using Moisesduartem.WebApiTemplate.Presentation.Extensions;
 using Microsoft.OpenApi.Models;
-using Moisesduartem.WebApiTemplate.IoC.Extensions;
 using Moisesduartem.WebApiTemplate.Presentation.Filters;
 using Serilog;
 
@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Host.UseSerilog((ctx, cfg) => cfg.WriteTo.Console());
 
-builder.Services.AddCrossCuttingConfiguration(builder.Configuration);
+builder.Services.AddInfrastructure(builder.Configuration);
 
 builder.Services
     .AddControllers(options =>
