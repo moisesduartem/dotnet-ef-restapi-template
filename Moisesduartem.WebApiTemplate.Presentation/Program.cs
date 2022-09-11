@@ -1,11 +1,15 @@
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Moisesduartem.WebApiTemplate.IoC.Extensions;
+using Moisesduartem.WebApiTemplate.Presentation.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddCrossCuttingConfiguration(builder.Configuration);
 
-builder.Services.AddControllers().AddNewtonsoftJson();
+builder.Services.AddControllers().AddNewtonsoftJson(options => 
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
@@ -23,6 +27,13 @@ if (app.Environment.IsDevelopment())
         options.SwaggerEndpoint($"/swagger/v1/swagger.json", $"v1");
     });
 }
+
+app.UseCors(options => options
+        .WithOrigins(builder.Configuration.GetSection("ApiClient:BaseUrl").Value)
+        .AllowAnyMethod()
+        .AllowAnyHeader());
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.UseHttpsRedirection();
 

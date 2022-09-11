@@ -22,10 +22,12 @@ namespace Moisesduartem.WebApiTemplate.Presentation.V1.Controllers
         {
             var result = await _mediator.Send(query, cancellationToken);
             
-            return result.MatchFirst(
-                value => (IActionResult) Ok(value),
-                error => BadRequest(error)
-            );
+            if (result.IsSuccess)
+            {
+                return Ok(result.Value);
+            }
+
+            return BadRequest(result.Errors);
         }
     }
 }

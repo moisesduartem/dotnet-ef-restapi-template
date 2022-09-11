@@ -1,7 +1,8 @@
 ﻿using FluentValidation;
+using FluentValidation.AspNetCore;
 using MediatR;
-using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Moisesduartem.WebApiTemplate.Domain.V1.Users.Repositories;
@@ -52,6 +53,7 @@ namespace Moisesduartem.WebApiTemplate.IoC.Builders
         public DependencyBuilder AddFluentValidation()
         {
             _services.AddValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssemblies());
+            _services.AddFluentValidationAutoValidation();
             return this;
         }
 
