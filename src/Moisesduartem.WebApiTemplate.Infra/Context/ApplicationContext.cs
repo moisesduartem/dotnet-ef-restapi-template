@@ -3,11 +3,11 @@ using Moisesduartem.WebApiTemplate.Domain.V1.Users.Entities;
 
 namespace Moisesduartem.WebApiTemplate.Infra.Context
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationContext : DbContext
     {
         public DbSet<User> Users { get; set; }
 
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
+        public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
         {
         }
     }

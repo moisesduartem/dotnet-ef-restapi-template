@@ -2,7 +2,6 @@
 using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Moisesduartem.WebApiTemplate.Application.V1.Options;
 using Moisesduartem.WebApiTemplate.Application.V1.Services;
@@ -11,7 +10,6 @@ using Moisesduartem.WebApiTemplate.Domain.V1.Users.Repositories;
 using Moisesduartem.WebApiTemplate.Infra.Context;
 using Moisesduartem.WebApiTemplate.Infra.Repositories;
 using Moisesduartem.WebApiTemplate.Infra.Services;
-using Serilog;
 using System.Text;
 
 namespace Moisesduartem.WebApiTemplate.Presentation.Extensions
@@ -30,7 +28,7 @@ namespace Moisesduartem.WebApiTemplate.Presentation.Extensions
         
         public static IServiceCollection AddEFCoreConfiguration(this IServiceCollection services, ConfigurationManager configuration)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
+            services.AddDbContext<ApplicationContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
             return services;
