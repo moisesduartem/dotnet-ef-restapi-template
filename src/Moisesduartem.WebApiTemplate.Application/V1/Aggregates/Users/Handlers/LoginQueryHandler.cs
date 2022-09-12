@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
 using MediatR;
+using Moisesduartem.WebApiTemplate.Application.V1.Aggregates.Users.DTOs;
+using Moisesduartem.WebApiTemplate.Application.V1.Aggregates.Users.Queries;
 using Moisesduartem.WebApiTemplate.Application.V1.Services;
 using Moisesduartem.WebApiTemplate.Application.V1.Shared;
-using Moisesduartem.WebApiTemplate.Application.V1.Users.DTOs;
-using Moisesduartem.WebApiTemplate.Application.V1.Users.Queries;
-using Moisesduartem.WebApiTemplate.Domain.V1.Users.Entities;
-using Moisesduartem.WebApiTemplate.Domain.V1.Users.Repositories;
+using Moisesduartem.WebApiTemplate.Domain.V1.Aggregates.Users.Entities;
+using Moisesduartem.WebApiTemplate.Domain.V1.Aggregates.Users.Repositories;
 
-namespace Moisesduartem.WebApiTemplate.Application.V1.Users.Handlers
+namespace Moisesduartem.WebApiTemplate.Application.V1.Aggregates.Users.Handlers
 {
     public class LoginQueryHandler : IRequestHandler<LoginQuery, Result<LoginDTO>>
     {

@@ -1,5 +1,5 @@
-﻿using Moisesduartem.WebApiTemplate.Domain.V1.Users.Entities;
-using Moisesduartem.WebApiTemplate.Domain.V1.Users.Repositories;
+﻿using Moisesduartem.WebApiTemplate.Domain.V1.Aggregates.Users.Entities;
+using Moisesduartem.WebApiTemplate.Domain.V1.Aggregates.Users.Repositories;
 
 namespace Moisesduartem.WebApiTemplate.Infra.Repositories
 {

@@ -1,4 +1,4 @@
-﻿namespace Moisesduartem.WebApiTemplate.Domain.V1.Users.Enums
+﻿namespace Moisesduartem.WebApiTemplate.Domain.V1.Aggregates.Users.Enums
 {
     public enum EAccountRole
     {

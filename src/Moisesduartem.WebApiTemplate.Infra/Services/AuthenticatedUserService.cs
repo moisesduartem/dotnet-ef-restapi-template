@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Moisesduartem.WebApiTemplate.Application.V1.Services;
-using Moisesduartem.WebApiTemplate.Application.V1.Users.DTOs;
+using Moisesduartem.WebApiTemplate.Application.V1.Aggregates.Users.DTOs;
 using System.Security.Claims;
 
 namespace Moisesduartem.WebApiTemplate.Infra.Services

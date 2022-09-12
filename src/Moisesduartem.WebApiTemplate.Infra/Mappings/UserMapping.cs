@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Moisesduartem.WebApiTemplate.Domain.V1.Users.Entities;
+using Moisesduartem.WebApiTemplate.Domain.V1.Aggregates.Users.Entities;
 
 namespace Moisesduartem.WebApiTemplate.Infra.Mappings
 {

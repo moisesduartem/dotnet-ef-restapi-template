@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
-using Moisesduartem.WebApiTemplate.Application.V1.Users.Queries;
+using Moisesduartem.WebApiTemplate.Application.V1.Aggregates.Users.Queries;
 
-namespace Moisesduartem.WebApiTemplate.Application.V1.Users.Validators
+namespace Moisesduartem.WebApiTemplate.Application.V1.Aggregates.Users.Validators
 {
     public class LoginQueryValidator : AbstractValidator<LoginQuery>
     {

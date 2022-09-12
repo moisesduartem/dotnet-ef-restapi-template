@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Moisesduartem.WebApiTemplate.Application.V1.Services;
-using Moisesduartem.WebApiTemplate.Application.V1.Users.Queries;
+using Moisesduartem.WebApiTemplate.Application.V1.Aggregates.Users.Queries;
 
 namespace Moisesduartem.WebApiTemplate.Presentation.V1.Controllers
 {

@@ -1,4 +1,4 @@
-﻿namespace Moisesduartem.WebApiTemplate.Application.V1.Users.DTOs
+﻿namespace Moisesduartem.WebApiTemplate.Application.V1.Aggregates.Users.DTOs
 {
     public class LoginDTO
     {

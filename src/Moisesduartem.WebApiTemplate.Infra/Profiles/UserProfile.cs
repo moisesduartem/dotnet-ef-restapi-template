@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using Moisesduartem.WebApiTemplate.Application.V1.Users.DTOs;
-using Moisesduartem.WebApiTemplate.Domain.V1.Users.Entities;
+using Moisesduartem.WebApiTemplate.Application.V1.Aggregates.Users.DTOs;
+using Moisesduartem.WebApiTemplate.Domain.V1.Aggregates.Users.Entities;
 
 namespace Moisesduartem.WebApiTemplate.Infra.Profiles
 {

@@ -2,7 +2,7 @@
 using Microsoft.IdentityModel.Tokens;
 using Moisesduartem.WebApiTemplate.Application.V1.Options;
 using Moisesduartem.WebApiTemplate.Application.V1.Services;
-using Moisesduartem.WebApiTemplate.Domain.V1.Users.Entities;
+using Moisesduartem.WebApiTemplate.Domain.V1.Aggregates.Users.Entities;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;

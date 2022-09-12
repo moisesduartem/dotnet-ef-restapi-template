@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using Moisesduartem.WebApiTemplate.Application.V1.Shared;
-using Moisesduartem.WebApiTemplate.Application.V1.Users.DTOs;
+using Moisesduartem.WebApiTemplate.Application.V1.Aggregates.Users.DTOs;
 
-namespace Moisesduartem.WebApiTemplate.Application.V1.Users.Queries
+namespace Moisesduartem.WebApiTemplate.Application.V1.Aggregates.Users.Queries
 {
     public class LoginQuery : IRequest<Result<LoginDTO>>
     {

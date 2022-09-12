@@ -1,4 +1,4 @@
-﻿using Moisesduartem.WebApiTemplate.Application.V1.Users.DTOs;
+﻿using Moisesduartem.WebApiTemplate.Application.V1.Aggregates.Users.DTOs;
 
 namespace Moisesduartem.WebApiTemplate.Application.V1.Services
 {
