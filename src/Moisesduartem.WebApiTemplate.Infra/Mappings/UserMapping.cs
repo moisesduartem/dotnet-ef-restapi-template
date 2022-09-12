@@ -12,7 +12,7 @@ namespace Moisesduartem.WebApiTemplate.Infra.Mappings
 
             builder.Property(x => x.Name)
                    .IsRequired()
-                   .HasColumnType("NVARCHAR")
+                   .HasColumnType("VARCHAR")
                    .HasMaxLength(50);
 
             builder.Property(x => x.Email)
