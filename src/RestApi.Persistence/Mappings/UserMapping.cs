@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using RestApi.Domain.V1.Aggregates.Users.Entities;
 
-namespace RestApi.Infra.Mappings
+namespace RestApi.Persistence.Mappings
 {
     public class UserMapping : IEntityTypeConfiguration<User>
     {

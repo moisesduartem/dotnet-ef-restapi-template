@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RestApi.Domain.V1.Aggregates.Users.Entities;
 
-namespace RestApi.Infra.Context
+namespace RestApi.Persistence.Context
 {
     public class ApplicationContext : DbContext
     {

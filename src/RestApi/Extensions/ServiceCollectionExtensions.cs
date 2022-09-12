@@ -3,13 +3,13 @@ using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using RestApi.Application.V1.Aggregates.Users.Handlers;
 using RestApi.Application.V1.Options;
 using RestApi.Application.V1.Services;
-using RestApi.Application.V1.Aggregates.Users.Handlers;
 using RestApi.Domain.V1.Aggregates.Users.Repositories;
-using RestApi.Infra.Context;
-using RestApi.Infra.Repositories;
 using RestApi.Infra.Services;
+using RestApi.Persistence.Context;
+using RestApi.Persistence.Repositories;
 using System.Text;
 
 namespace RestApi.Extensions

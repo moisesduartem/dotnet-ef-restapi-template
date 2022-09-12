@@ -13,13 +13,12 @@
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.8" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.8" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.8" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\RestApi.Application\RestApi.Application.csproj" />
     <ProjectReference Include="..\RestApi.Domain\RestApi.Domain.csproj" />
+    <ProjectReference Include="..\RestApi.Persistence\RestApi.Persistence.csproj" />
   </ItemGroup>
 
 </Project>
