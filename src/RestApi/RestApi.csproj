@@ -20,7 +20,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\RestApi.Identity\RestApi.Identity.csproj" />
     <ProjectReference Include="..\RestApi.Infra\RestApi.Infra.csproj" />
+    <ProjectReference Include="..\RestApi.Persistence\RestApi.Persistence.csproj" />
   </ItemGroup>
 
 </Project>

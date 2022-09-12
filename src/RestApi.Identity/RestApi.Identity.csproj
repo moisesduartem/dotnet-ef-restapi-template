@@ -13,4 +13,8 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.8" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\RestApi.Persistence\RestApi.Persistence.csproj" />
+  </ItemGroup>
+
 </Project>

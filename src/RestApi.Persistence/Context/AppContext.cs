@@ -4,11 +4,11 @@ using RestApi.Persistence.Mappings;
 
 namespace RestApi.Persistence.Context
 {
-    public class ApplicationContext : DbContext
+    public class AppContext : DbContext
     {
         public DbSet<User> Users { get; set; }
 
-        public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
+        public AppContext(DbContextOptions<AppContext> options) : base(options)
         {
         }
 

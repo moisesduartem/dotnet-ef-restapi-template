@@ -11,7 +11,7 @@ using RestApi.Persistence.Context;
 
 namespace RestApi.Persistence.Migrations
 {
-    [DbContext(typeof(ApplicationContext))]
+    [DbContext(typeof(Context.AppContext))]
     [Migration("20220912183907_CreateUsersTable")]
     partial class CreateUsersTable
     {

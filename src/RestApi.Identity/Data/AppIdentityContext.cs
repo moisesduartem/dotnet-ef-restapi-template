@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace RestApi.Identity.Data
 {
-    public class ApplicationIdentityContext : IdentityDbContext
+    public class AppIdentityContext : IdentityDbContext
     {
-        public ApplicationIdentityContext(DbContextOptions<ApplicationIdentityContext> options) 
+        public AppIdentityContext(DbContextOptions<AppIdentityContext> options) 
             : base(options)
         {
         }

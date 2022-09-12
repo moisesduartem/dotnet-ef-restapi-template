@@ -10,7 +10,7 @@ using RestApi.Persistence.Context;
 
 namespace RestApi.Persistence.Migrations
 {
-    [DbContext(typeof(ApplicationContext))]
+    [DbContext(typeof(Context.AppContext))]
     partial class ApplicationContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

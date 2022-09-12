@@ -1,8 +1,6 @@
-global using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.OpenApi.Models;
-using RestApi.Infra.Profiles;
 using RestApi.Extensions;
 using RestApi.Filters;
 using Serilog;
@@ -24,6 +22,18 @@ builder.Services
 
 builder.Services.AddEFCoreConfiguration(builder.Configuration);
 
+builder.Services.AddIdentityConfiguration(builder.Configuration);
+
+builder.Services.AddDIConfiguration();
+
+builder.Services.AddFluentValidationConfiguration();
+
+builder.Services.AddMediatorConfiguration();
+
+builder.Services.AddAutoMapperConfiguration();
+
+//builder.Services.AddJwtConfiguration(builder.Configuration);
+
 builder.Services.AddApiVersioning(options =>
 {
     options.DefaultApiVersion = new ApiVersion(1, 0);
@@ -33,19 +43,6 @@ builder.Services.AddApiVersioning(options =>
         new HeaderApiVersionReader("api-version"),
         new UrlSegmentApiVersionReader()
     );
-});
-
-builder.Services.AddDIConfiguration();
-
-builder.Services.AddFluentValidationConfiguration();
-
-builder.Services.AddMediatorConfiguration();
-
-builder.Services.AddJwtConfiguration(builder.Configuration);
-
-builder.Services.AddAutoMapper(cfg =>
-{
-    cfg.AddProfile<UserProfile>();
 });
 
 builder.Services.AddEndpointsApiExplorer();

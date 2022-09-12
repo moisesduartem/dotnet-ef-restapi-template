@@ -1,22 +1,30 @@
 ﻿using FluentValidation;
 using FluentValidation.AspNetCore;
 using MediatR;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
+using Microsoft.EntityFrameworkCore;
 using RestApi.Application.V1.Aggregates.Users.Handlers;
-using RestApi.Application.V1.Options;
 using RestApi.Application.V1.Services;
 using RestApi.Domain.V1.Aggregates.Users.Repositories;
+using RestApi.Identity.Data;
+using RestApi.Infra.Profiles;
 using RestApi.Infra.Services;
 using RestApi.Persistence.Context;
 using RestApi.Persistence.Repositories;
-using System.Text;
 
 namespace RestApi.Extensions
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddDIConfiguration(this IServiceCollection services)
+        public static IServiceCollection AddAutoMapperConfiguration(this IServiceCollection services)
+        {
+            services.AddAutoMapper(cfg =>
+            {
+                cfg.AddProfile<UserProfile>();
+            });
+
+            return services;
+        }
+           public static IServiceCollection AddDIConfiguration(this IServiceCollection services)
         {
             services.AddScoped<IUserRepository, UserRepository>();
 
@@ -25,10 +33,19 @@ namespace RestApi.Extensions
 
             return services;
         }
+
+        public static IServiceCollection AddIdentityConfiguration(this IServiceCollection services, ConfigurationManager configuration)
+        {
+            services.AddDbContext<AppIdentityContext>(options => 
+                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"))
+            );
+
+            return services;
+        }
         
         public static IServiceCollection AddEFCoreConfiguration(this IServiceCollection services, ConfigurationManager configuration)
         {
-            services.AddDbContext<ApplicationContext>();
+            services.AddDbContext<Persistence.Context.AppContext>();
 
             return services;
         }
@@ -45,37 +62,6 @@ namespace RestApi.Extensions
         {
             services.AddMediatR(typeof(LoginQueryHandler).Assembly);
             
-            return services;
-        }
-        
-        public static IServiceCollection AddJwtConfiguration(this IServiceCollection services, ConfigurationManager configuration)
-        {
-            var authenticationSection = configuration.GetSection("Authentication");
-
-            var secretKey = Encoding.ASCII.GetBytes(authenticationSection.GetValue<string>("Secret"));
-
-            services.Configure<AuthenticationOptions>(authenticationSection);
-
-            services
-                .AddHttpContextAccessor()
-                .AddAuthentication(x =>
-                {
-                    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                })
-                .AddJwtBearer(x =>
-                {
-                    x.RequireHttpsMetadata = false;
-                    x.SaveToken = true;
-                    x.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(secretKey),
-                        ValidateIssuer = false,
-                        ValidateAudience = false
-                    };
-                }); ;
-
             return services;
         }
     }
