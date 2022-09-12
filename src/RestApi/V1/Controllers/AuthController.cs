@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RestApi.Application.V1.Services;
 using RestApi.Application.V1.Aggregates.Users.Queries;
+using RestApi.Application.V1.Aggregates.Users.Commands;
 
 namespace RestApi.V1.Controllers
 {
@@ -13,11 +14,13 @@ namespace RestApi.V1.Controllers
     {
         private readonly IMediator _mediator;
         private readonly IAuthenticatedUserService _authenticatedUserService;
+        private readonly IIdentityService _identityService;
 
-        public AuthController(IMediator mediator, IAuthenticatedUserService userService)
+        public AuthController(IMediator mediator, IAuthenticatedUserService userService, IIdentityService identityService)
         {
             _mediator = mediator;
             _authenticatedUserService = userService;
+            _identityService = identityService;
         }
 
         [HttpPost("login")]
@@ -29,6 +32,20 @@ namespace RestApi.V1.Controllers
             if (result.IsValid)
             {
                 return Ok(result.Value);
+            }
+
+            return BadRequest(result);
+        }
+
+        [HttpPost("register")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Register(RegisterUserCommand command, CancellationToken cancellationToken)
+        {
+            var result = await _identityService.RegisterAsync(command);
+
+            if (result.IsValid)
+            {
+                return StatusCode(StatusCodes.Status201Created);
             }
 
             return BadRequest(result);

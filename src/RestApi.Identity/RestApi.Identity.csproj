@@ -14,11 +14,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\RestApi.Application\RestApi.Application.csproj" />
     <ProjectReference Include="..\RestApi.Persistence\RestApi.Persistence.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Services\" />
   </ItemGroup>
 
 </Project>

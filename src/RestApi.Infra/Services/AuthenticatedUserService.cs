@@ -31,7 +31,6 @@ namespace RestApi.Infra.Services
                 Id = user.FindFirstValue(ClaimTypes.NameIdentifier),
                 Name = user.FindFirstValue(ClaimTypes.Name),
                 Email = user.FindFirstValue(ClaimTypes.Email),
-                Role = user.FindFirstValue(ClaimTypes.Role)
             };
         }
     }
