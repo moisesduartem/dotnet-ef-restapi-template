@@ -31,10 +31,6 @@ namespace RestApi.Persistence.Mappings
                    .IsRequired()
                    .HasColumnType("CHAR")
                    .HasMaxLength(72);
-            
-            builder.Property(x => x.Role)
-                   .IsRequired()
-                   .HasColumnType("TINYINT");
 
             builder.Property(x => x.CreateDate)
                    .IsRequired()

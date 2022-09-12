@@ -17,4 +17,8 @@
     <ProjectReference Include="..\RestApi.Persistence\RestApi.Persistence.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Services\" />
+  </ItemGroup>
+
 </Project>

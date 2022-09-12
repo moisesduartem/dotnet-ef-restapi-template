@@ -28,7 +28,6 @@ namespace RestApi.Extensions
         {
             services.AddScoped<IUserRepository, UserRepository>();
 
-            services.AddScoped<ITokenGenerationService, TokenGenerationService>();
             services.AddScoped<IAuthenticatedUserService, AuthenticatedUserService>();
 
             return services;

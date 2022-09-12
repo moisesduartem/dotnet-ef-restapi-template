@@ -12,13 +12,11 @@ namespace RestApi.Application.V1.Aggregates.Users.Handlers
     public class LoginQueryHandler : IRequestHandler<LoginQuery, Result<LoginDTO>>
     {
         private readonly IUserRepository _userRepository;
-        private readonly ITokenGenerationService _tokenGenerationService;
         private readonly IMapper _mapper;
 
-        public LoginQueryHandler(IUserRepository userRepository, ITokenGenerationService tokenGenerationService, IMapper mapper)
+        public LoginQueryHandler(IUserRepository userRepository, IMapper mapper)
         {
             _userRepository = userRepository;
-            _tokenGenerationService = tokenGenerationService;
             _mapper = mapper;
         }
 
@@ -31,7 +29,9 @@ namespace RestApi.Application.V1.Aggregates.Users.Handlers
                 return Result<LoginDTO>.Create().Error("Login", "Invalid email and/or password");
             }
 
-            string token = _tokenGenerationService.GenerateFor(user);
+            //string token = _tokenGenerationService.GenerateFor(user);
+
+            string token = "abc";
 
             var loginDto = _mapper.Map<User, LoginDTO>(user);
             loginDto = _mapper.Map(token, loginDto);

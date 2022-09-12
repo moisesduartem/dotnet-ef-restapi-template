@@ -1,5 +1,4 @@
 ﻿using RestApi.Domain.V1.Shared;
-using RestApi.Domain.V1.Aggregates.Users.Enums;
 
 namespace RestApi.Domain.V1.Aggregates.Users.Entities
 {
@@ -9,7 +8,6 @@ namespace RestApi.Domain.V1.Aggregates.Users.Entities
         public string Email { get; private set; }
         public string Username { get; private set; }
         public string PasswordHash { get; private set; }
-        public EAccountRole Role { get; private set; }
         public DateTime CreateDate { get; private set; }
         public DateTime UpdateDate { get; private set; }
 
@@ -19,7 +17,6 @@ namespace RestApi.Domain.V1.Aggregates.Users.Entities
             Email = email;
             Username = username;
             PasswordHash = passwordHash;
-            Role = EAccountRole.User;
             CreateDate = DateTime.Now;
             UpdateDate = DateTime.Now;
         }
