@@ -28,8 +28,7 @@ namespace RestApi.Extensions
         
         public static IServiceCollection AddEFCoreConfiguration(this IServiceCollection services, ConfigurationManager configuration)
         {
-            services.AddDbContext<ApplicationContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<ApplicationContext>();
 
             return services;
         }
