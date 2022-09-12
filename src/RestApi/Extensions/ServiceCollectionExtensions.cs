@@ -8,7 +8,6 @@ using RestApi.Domain.V1.Aggregates.Users.Repositories;
 using RestApi.Identity.Data;
 using RestApi.Infra.Profiles;
 using RestApi.Infra.Services;
-using RestApi.Persistence.Context;
 using RestApi.Persistence.Repositories;
 
 namespace RestApi.Extensions
