@@ -6,8 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using RestApi.Application.V1.Aggregates.Users.Handlers;
 using RestApi.Application.V1.Services;
 using RestApi.Domain.V1.Aggregates.Users.Repositories;
-using RestApi.Identity.Configuration;
 using RestApi.Identity.Data;
+using RestApi.Identity.Extensions;
 using RestApi.Identity.Services;
 using RestApi.Infra.Profiles;
 using RestApi.Infra.Services;
@@ -36,9 +36,9 @@ namespace RestApi.Extensions
             return services;
         }
 
-        public static IServiceCollection AddIdentityConfiguration(this IServiceCollection services, ConfigurationManager configuration)
+        public static IServiceCollection AddIdentityConfiguration(this IServiceCollection services, IConfiguration configuration)
         {
-            services.Configure<JwtOptions>(configuration.GetSection("JwtOptions"));
+            services.AddJsonWebTokenAuthentication(configuration);
 
             services.AddDefaultIdentity<IdentityUser>()
                     .AddRoles<IdentityRole>()
