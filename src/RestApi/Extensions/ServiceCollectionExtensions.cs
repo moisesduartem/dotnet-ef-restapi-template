@@ -6,14 +6,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
-using RestApi.Application.V1.Aggregates.Users.Handlers;
 using RestApi.Application.V1.Services;
 using RestApi.Domain.V1.Aggregates.Users.Repositories;
 using RestApi.Filters;
 using RestApi.Identity.Data;
 using RestApi.Identity.Extensions;
 using RestApi.Identity.Services;
-using RestApi.Infra.Profiles;
 using RestApi.Persistence.Repositories;
 
 namespace RestApi.Extensions
@@ -22,10 +20,7 @@ namespace RestApi.Extensions
     {
         public static IServiceCollection AddAutoMapperConfiguration(this IServiceCollection services)
         {
-            services.AddAutoMapper(cfg =>
-            {
-                cfg.AddProfile<UserProfile>();
-            });
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             return services;
         }
@@ -135,7 +130,7 @@ namespace RestApi.Extensions
 
         public static IServiceCollection AddMediatorConfiguration(this IServiceCollection services)
         {
-            services.AddMediatR(typeof(LoginQueryHandler).Assembly);
+            services.AddMediatR(AppDomain.CurrentDomain.GetAssemblies());
 
             return services;
         }
