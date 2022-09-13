@@ -21,13 +21,15 @@ namespace RestApi.Infra.Services
         {
             var email = _fluentEmail
                      .To(request.ToEmail)
-                     .Subject(request.Subject)
-                     .Body(request.Body);
+                     .Subject(request.Subject);
 
             if (request.HasRazorTemplate)
             {
                 var path = $"{Directory.GetCurrentDirectory()}/{_options.TemplatesDirectory}/{request.TemplatePath}";
                 email.UsingTemplateFromFile(path, request.TemplateModel);
+            } else
+            {
+                email.Body(request.Body);
             }
 
             return email.SendAsync(cancellationToken);

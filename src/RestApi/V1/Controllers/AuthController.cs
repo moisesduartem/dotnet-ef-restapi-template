@@ -35,13 +35,27 @@ namespace RestApi.V1.Controllers
 
         [HttpPost("register")]
         [AllowAnonymous]
-        public async Task<IActionResult> Register(RegisterUserCommand command)
+        public async Task<IActionResult> Register(RegisterUserCommand command, CancellationToken cancellationToken)
         {
-            var result = await _identityService.RegisterAsync(command);
+            var result = await _identityService.RegisterAsync(command, cancellationToken);
 
             if (result.Success)
             {
                 return StatusCode(StatusCodes.Status201Created);
+            }
+
+            return BadRequest(result);
+        }
+        
+        [HttpPost("confirm-email")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Register(ConfirmEmailCommand command)
+        {
+            var result = await _identityService.ConfirmEmailAsync(command);
+
+            if (result.Success)
+            {
+                return NoContent();
             }
 
             return BadRequest(result);

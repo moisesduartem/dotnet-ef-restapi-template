@@ -7,8 +7,9 @@ namespace RestApi.Application.V1.Services
 {
     public interface IIdentityService
     {
+        Task<Result> ConfirmEmailAsync(ConfirmEmailCommand command);
         Task<LoggedUserDTO?> GetLoggedUserAsync();
         Task<LoginDTO> LoginAsync(LoginQuery query);
-        Task<Result> RegisterAsync(RegisterUserCommand command);
+        Task<Result> RegisterAsync(RegisterUserCommand command, CancellationToken cancellationToken);
     }
 }

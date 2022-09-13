@@ -1,14 +1,17 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Options;
 using RestApi.Application.V1.Aggregates.Users.Commands;
 using RestApi.Application.V1.Aggregates.Users.DTOs;
 using RestApi.Application.V1.Aggregates.Users.Queries;
+using RestApi.Application.V1.Configuration;
 using RestApi.Application.V1.Services;
 using RestApi.Application.V1.Shared;
 using RestApi.Identity.Configuration;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Text;
 
 namespace RestApi.Identity.Services
 {
@@ -18,13 +21,43 @@ namespace RestApi.Identity.Services
         private readonly UserManager<IdentityUser> _userManager;
         private readonly JwtOptions _jwtOptions;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IMailService _mailService;
 
-        public IdentityService(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager, IOptions<JwtOptions> jwtOptions, IHttpContextAccessor httpContextAccessor)
+        public IdentityService(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager, IOptions<JwtOptions> jwtOptions, IHttpContextAccessor httpContextAccessor, IMailService mailService)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _jwtOptions = jwtOptions.Value;
             _httpContextAccessor = httpContextAccessor;
+            _mailService = mailService;
+        }
+
+        private async Task SendVerificationEmailAsync(IdentityUser user, CancellationToken cancellationToken)
+        {
+            string token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+
+            var mailRequest = new MailRequest
+            {
+                ToEmail = user.Email,
+                Subject = "Confirm your email",
+                Body = $"Your confirmation token is: {token}"
+            };
+
+            await _mailService.SendAsync(mailRequest, cancellationToken);
+        }
+
+        public async Task<Result> ConfirmEmailAsync(ConfirmEmailCommand command)
+        {
+            var user = await _userManager.FindByEmailAsync(command.Email);
+
+            var result = await _userManager.ConfirmEmailAsync(user, command.Token);
+
+            if (result.Succeeded)
+            {
+                return Result.Create();
+            }
+
+            return Result.Create().Error($"Invalid email token for {command.Email}");
         }
 
         public async Task<LoggedUserDTO?> GetLoggedUserAsync()
@@ -32,7 +65,7 @@ namespace RestApi.Identity.Services
             if (_httpContextAccessor.HttpContext is not null)
             {
                 var user = await _userManager.GetUserAsync(_httpContextAccessor?.HttpContext?.User);
-                
+
                 return new LoggedUserDTO
                 {
                     Id = user.Id,
@@ -59,30 +92,33 @@ namespace RestApi.Identity.Services
 
             else if (signInResult.IsNotAllowed)
                 result.AddError("This account is not allow to login");
-            
+
             else if (signInResult.RequiresTwoFactor)
                 result.AddError("It is necessary to confirm the login at your second device");
-            
+
             else
                 result.AddError("Invalid credentials");
 
             return result;
         }
 
-        public async Task<Result> RegisterAsync(RegisterUserCommand command)
+        public async Task<Result> RegisterAsync(RegisterUserCommand command, CancellationToken cancellationToken)
         {
             var identityUser = new IdentityUser
             {
                 UserName = command.Email,
                 Email = command.Email,
-                EmailConfirmed = true
+                EmailConfirmed = false
             };
 
             var result = await _userManager.CreateAsync(identityUser, command.Password);
 
             if (result.Succeeded)
             {
+                await SendVerificationEmailAsync(identityUser, cancellationToken);
+
                 await _userManager.SetLockoutEnabledAsync(identityUser, false);
+
                 return Result.Create();
             }
 
