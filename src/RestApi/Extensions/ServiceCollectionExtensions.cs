@@ -2,11 +2,14 @@
 using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using RestApi.Application.V1.Aggregates.Users.Handlers;
 using RestApi.Application.V1.Services;
 using RestApi.Domain.V1.Aggregates.Users.Repositories;
+using RestApi.Filters;
 using RestApi.Identity.Data;
 using RestApi.Identity.Extensions;
 using RestApi.Identity.Services;
@@ -27,11 +30,41 @@ namespace RestApi.Extensions
             return services;
         }
 
-        public static IServiceCollection AddSwaggerGenConfiguration(this IServiceCollection services)
+        public static IServiceCollection AddControllersConfiguration(this IServiceCollection services)
+        {
+            services.AddControllers(options =>
+              {
+                  options.Filters.Add(typeof(ExceptionHandlerFilterAttribute));
+              })
+             .AddNewtonsoftJson(options =>
+             {
+                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                 options.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
+             });
+
+            return services;
+        }
+        public static IServiceCollection AddApiVersioningConfiguration(this IServiceCollection services)
+        {
+            services.AddApiVersioning(options =>
+            {
+                options.DefaultApiVersion = new ApiVersion(1, 0);
+                options.ReportApiVersions = true;
+                options.AssumeDefaultVersionWhenUnspecified = true;
+                options.ApiVersionReader = ApiVersionReader.Combine(
+                    new HeaderApiVersionReader("api-version"),
+                    new UrlSegmentApiVersionReader()
+                );
+            });
+
+            return services;
+        }
+
+        public static IServiceCollection AddSwaggerGenConfiguration(this IServiceCollection services, string applicationName)
         {
             services.AddSwaggerGen(options =>
             {
-                options.SwaggerDoc("v1", new OpenApiInfo { Version = "v1", Title = "RestApi" });
+                options.SwaggerDoc("v1", new OpenApiInfo { Version = "v1", Title = applicationName });
 
                 options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
                 {
