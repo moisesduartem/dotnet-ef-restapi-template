@@ -32,7 +32,7 @@ The relational database used to create this template was **Microsoft SQL Server 
     - [https://docs.microsoft.com/en-us/aspnet/core/security/authentication/identity?view=aspnetcore-6.0](https://docs.microsoft.com/en-us/aspnet/core/security/authentication/identity?view=aspnetcore-6.0)
 - Email sender - **FluentEmail**
     - [https://github.com/lukencode/FluentEmail](https://github.com/lukencode/FluentEmail)
-- **Fluent Validation**
+- Fail fast validations - **Fluent Validation**
     - [https://fluentvalidation.net/](https://fluentvalidation.net/)
 - Mediator implementation - **MediatR**
     - [https://github.com/jbogard/MediatR](https://github.com/jbogard/MediatR)
