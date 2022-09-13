@@ -18,12 +18,12 @@ namespace RestApi.Identity.Services
             _userManager = userManager;
         }
 
-        public Task<Result<LoginDTO>> Login(LoginQuery query)
+        public Task<IResult<LoginDTO>> Login(LoginQuery query)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<Result<RegisteredUserDTO>> RegisterAsync(RegisterUserCommand command)
+        public async Task<IResult> RegisterAsync(RegisterUserCommand command)
         {
             var identityUser = new IdentityUser
             {
@@ -37,14 +37,12 @@ namespace RestApi.Identity.Services
             if (result.Succeeded)
             {
                 await _userManager.SetLockoutEnabledAsync(identityUser, false);
-                return Result<RegisteredUserDTO>.Create().Ok();
+                return Result.Create().Ok();
             }
 
             IList<string> errors = result.Errors.Select(x => x.Description).ToList();
 
-            return Result<RegisteredUserDTO>.Create().Error(new Dictionary<string, IList<string>> {
-                ["Register"] = errors
-            });
+            return Result.Create().Error(errors);
         }
     }
 }

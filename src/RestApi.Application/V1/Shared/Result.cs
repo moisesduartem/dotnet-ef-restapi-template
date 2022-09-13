@@ -2,61 +2,91 @@
 
 namespace RestApi.Application.V1.Shared
 {
-    public class Result<T> where T : class
+    public interface IResult
     {
-        [IgnoreDataMember]
-        public bool Done { get; private set; }
-        public Dictionary<string, IList<string>> Errors { get; private set; }
-        public T? Value { get; private set; }
+        ICollection<string> Errors { get; }
+        object? Value { get; }
+        bool IsValid { get; }
+        IResult Ok();
+        IResult Error(string message);
+        IResult Error(ICollection<string> messages);
+    }
+    
+    public interface IResult<TValue> : IResult 
+    {
+        IResult<TValue> Error<T>(string message) where T : TValue;
+        IResult<TValue> Error<T>(ICollection<string> messages) where T : TValue;
+        IResult<TValue> Ok(TValue value);
+    }
 
-        private Result()
+    public abstract class AbstractResult : IResult
+    {
+        public ICollection<string> Errors { get; protected set; }
+        public object? Value { get; protected set; }
+        protected bool Done { get; set; }
+
+        [IgnoreDataMember]
+        public bool IsValid => Errors.Count == 0;
+
+        protected AbstractResult()
         {
             Done = false;
-            Errors = new Dictionary<string, IList<string>> { };
+            Errors = new List<string>();
             Value = null;
         }
 
-        public static Result<T> Create()
+        public virtual IResult Ok()
+        {
+            Done = true;
+            return this;
+        }
+
+        public virtual IResult Error(string message)
+        {
+            Done = true;
+            Errors.Add(message);
+            return this;
+        }
+
+        public virtual IResult Error(ICollection<string> messages)
+        {
+            Done = true;
+            Errors = messages;
+            return this;
+        }
+    }
+
+    public class Result<TValue> : AbstractResult, IResult<TValue>
+    {
+        public IResult<TValue> Error<T>(string message) where T : TValue
+        {
+            Error(message);
+            return this;
+        }
+
+        public IResult<TValue> Error<T>(ICollection<string> messages) where T : TValue
+        {
+            Error(messages);
+            return this;
+        }
+
+        public IResult<TValue> Ok(TValue value)
+        {
+            Ok(value);
+            return this;
+        }
+    }
+
+    public class Result : AbstractResult
+    {
+        public static IResult Create()
+        {
+            return new Result();
+        }
+
+        public static IResult<T> Create<T>()
         {
             return new Result<T>();
         }
-
-        public Result<T> Ok()
-        {
-            Done = true;
-            return this;
-        }
-        
-        public Result<T> Ok(T value)
-        {
-            Done = true;
-            Value = value;
-            return this;
-        }
-
-        public Result<T> Error(string code, string message)
-        {
-            if (Errors.ContainsKey(code))
-            {
-                Errors[code].Add(message);
-            } else
-            {
-                Errors.Add(code, new List<string> { message });
-            }
-
-            Done = true;
-            
-            return this;
-        }
-
-        public Result<T> Error(Dictionary<string, IList<string>> errors)
-        {
-            Errors = errors;
-            Done = false;
-            return this;
-        }
-
-        [IgnoreDataMember]
-        public bool IsValid => Done && Errors.Count == 0;
     }
 }

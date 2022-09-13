@@ -20,7 +20,7 @@ namespace RestApi.Filters
 
             _logger.LogCritical(context.Exception, "Failed to process the request");
 
-            var result = Result<object>.Create().Error("UnexpectedError", "Failed to process the request");
+            var result = Result.Create().Error("Failed to process the request");
 
             context.Result = new ObjectResult(result)
             {
