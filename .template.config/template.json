@@ -17,7 +17,9 @@
             {
               "exclude": [
                 ".vs/**",
-                ".git/**"
+                ".git/**",
+                "docs/**",
+                "README.md"
               ]
             }
           ]
