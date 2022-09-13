@@ -10,7 +10,6 @@ using RestApi.Identity.Data;
 using RestApi.Identity.Extensions;
 using RestApi.Identity.Services;
 using RestApi.Infra.Profiles;
-using RestApi.Infra.Services;
 using RestApi.Persistence.Repositories;
 
 namespace RestApi.Extensions
@@ -30,7 +29,6 @@ namespace RestApi.Extensions
         {
             services.AddScoped<IUserRepository, UserRepository>();
 
-            services.AddScoped<IAuthenticatedUserService, AuthenticatedUserService>();
             services.AddScoped<IIdentityService, IdentityService>();
 
             return services;
@@ -52,7 +50,7 @@ namespace RestApi.Extensions
             return services;
         }
         
-        public static IServiceCollection AddEFCoreConfiguration(this IServiceCollection services, ConfigurationManager configuration)
+        public static IServiceCollection AddEFCoreConfiguration(this IServiceCollection services)
         {
             services.AddDbContext<Persistence.Context.AppContext>();
 

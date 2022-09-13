@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using RestApi.Application.V1.Aggregates.Users.Commands;
 using RestApi.Application.V1.Aggregates.Users.DTOs;
@@ -16,12 +17,30 @@ namespace RestApi.Identity.Services
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly JwtOptions _jwtOptions;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public IdentityService(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager, IOptions<JwtOptions> jwtOptions)
+        public IdentityService(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager, IOptions<JwtOptions> jwtOptions, IHttpContextAccessor httpContextAccessor)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _jwtOptions = jwtOptions.Value;
+            _httpContextAccessor = httpContextAccessor;
+        }
+
+        public async Task<LoggedUserDTO?> GetLoggedUserAsync()
+        {
+            if (_httpContextAccessor.HttpContext is not null)
+            {
+                var user = await _userManager.GetUserAsync(_httpContextAccessor?.HttpContext?.User);
+                
+                return new LoggedUserDTO
+                {
+                    Id = user.Id,
+                    Email = user.Email
+                };
+            }
+
+            return null;
         }
 
         public async Task<LoginDTO> LoginAsync(LoginQuery query)

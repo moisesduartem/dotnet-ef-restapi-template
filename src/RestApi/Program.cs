@@ -20,7 +20,7 @@ builder.Services
         options.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
     });
 
-builder.Services.AddEFCoreConfiguration(builder.Configuration);
+builder.Services.AddEFCoreConfiguration();
 
 builder.Services.AddIdentityConfiguration(builder.Configuration);
 

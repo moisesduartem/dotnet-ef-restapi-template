@@ -13,13 +13,11 @@ namespace RestApi.V1.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IMediator _mediator;
-        private readonly IAuthenticatedUserService _authenticatedUserService;
         private readonly IIdentityService _identityService;
 
-        public AuthController(IMediator mediator, IAuthenticatedUserService userService, IIdentityService identityService)
+        public AuthController(IMediator mediator, IIdentityService identityService)
         {
             _mediator = mediator;
-            _authenticatedUserService = userService;
             _identityService = identityService;
         }
 
@@ -53,9 +51,9 @@ namespace RestApi.V1.Controllers
 
         [HttpGet("profile")]
         [Authorize]
-        public IActionResult Profile()
+        public async Task<IActionResult> Profile()
         {
-            var user = _authenticatedUserService.GetLoggedUser();
+            var user = await _identityService.GetLoggedUserAsync();
 
             if (user is not null)
             {
