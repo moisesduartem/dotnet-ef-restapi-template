@@ -49,9 +49,23 @@ namespace RestApi.V1.Controllers
         
         [HttpPost("confirm-email")]
         [AllowAnonymous]
-        public async Task<IActionResult> Register(ConfirmEmailCommand command)
+        public async Task<IActionResult> ConfirmEmail(ConfirmEmailCommand command)
         {
             var result = await _identityService.ConfirmEmailAsync(command);
+
+            if (result.Success)
+            {
+                return NoContent();
+            }
+
+            return BadRequest(result);
+        }
+        
+        [HttpPost("forgot-password")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordCommand command, CancellationToken cancellationToken)
+        {
+            var result = await _identityService.ForgotPasswordAsync(command, cancellationToken);
 
             if (result.Success)
             {

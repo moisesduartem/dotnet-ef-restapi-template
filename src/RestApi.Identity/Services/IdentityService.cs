@@ -46,20 +46,6 @@ namespace RestApi.Identity.Services
             await _mailService.SendAsync(mailRequest, cancellationToken);
         }
 
-        public async Task<Result> ConfirmEmailAsync(ConfirmEmailCommand command)
-        {
-            var user = await _userManager.FindByEmailAsync(command.Email);
-
-            var result = await _userManager.ConfirmEmailAsync(user, command.Token);
-
-            if (result.Succeeded)
-            {
-                return Result.Create();
-            }
-
-            return Result.Create().Error($"Invalid email token for {command.Email}");
-        }
-
         public async Task<LoggedUserDTO?> GetLoggedUserAsync()
         {
             if (_httpContextAccessor.HttpContext is not null)
@@ -171,6 +157,42 @@ namespace RestApi.Identity.Services
             }
 
             return claims;
+        }
+
+        public async Task<Result> ConfirmEmailAsync(ConfirmEmailCommand command)
+        {
+            var user = await _userManager.FindByEmailAsync(command.Email);
+
+            var result = await _userManager.ConfirmEmailAsync(user, command.Token);
+
+            if (result.Succeeded)
+            {
+                return Result.Create();
+            }
+
+            return Result.Create().Error($"Invalid email token for {command.Email}");
+        }
+
+        public async Task<Result> ForgotPasswordAsync(ForgotPasswordCommand command, CancellationToken cancellationToken)
+        {
+            var user = await _userManager.FindByEmailAsync(command.Email);
+
+            string token = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+            var mailRequest = new MailRequest
+            {
+                ToEmail = command.Email,
+                Subject = "Reset Password",
+                TemplatePath = "ResetPassword.cshtml",
+                TemplateModel = new
+                {
+                    Token = token
+                }
+            };
+
+            await _mailService.SendAsync(mailRequest, cancellationToken);
+
+            return Result.Create();
         }
     }
 }

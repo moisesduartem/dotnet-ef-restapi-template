@@ -7,7 +7,5 @@
         public string Body { get; set; }
         public string? TemplatePath { get; set; }
         public object? TemplateModel { get; set; }
-
-        public bool HasRazorTemplate => TemplatePath != null;
     }
 }

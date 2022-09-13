@@ -23,9 +23,9 @@ namespace RestApi.Infra.Services
                      .To(request.ToEmail)
                      .Subject(request.Subject);
 
-            if (request.HasRazorTemplate)
+            if (request.TemplatePath != null)
             {
-                var path = $"{Directory.GetCurrentDirectory()}/{_options.TemplatesDirectory}/{request.TemplatePath}";
+                var path = Path.Combine(Directory.GetCurrentDirectory(), _options.TemplatesDirectory, request.TemplatePath);
                 email.UsingTemplateFromFile(path, request.TemplateModel);
             } else
             {
