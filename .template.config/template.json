@@ -1,0 +1,26 @@
+{
+    "$schema": "https://json.schemastore.org/template",
+    "author": "Moisés Maia",
+    "classifications": ["Web", "WebAPI"],
+    "identity": "RestApi",
+    "name": "moisesduartem's REST API Template",
+    "shortName": "restapi",
+    "sourceName": "RestApi",
+    "tags": {
+        "language": "C#",
+        "type": "solution"
+    },
+    "preferNameDirectory": false,
+    "sources": [
+        {
+          "modifiers": [
+            {
+              "exclude": [
+                ".vs/**",
+                ".git/**"
+              ]
+            }
+          ]
+        }
+      ]
+}
