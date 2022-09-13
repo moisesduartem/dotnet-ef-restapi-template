@@ -47,11 +47,18 @@ namespace RestApi.V1.Controllers
             return BadRequest(result);
         }
         
-        [HttpPost("confirm-email")]
+        [HttpPatch("confirm-email")]
         [AllowAnonymous]
         public async Task<IActionResult> ConfirmEmail(ConfirmEmailCommand command)
         {
-            var result = await _identityService.ConfirmEmailAsync(command);
+            var user = await _identityService.FindUserByEmailAsync(command.Email);
+
+            if (user is null)
+            {
+                return NotFound();
+            }
+
+            var result = await _identityService.ConfirmEmailAsync(user, command.Token);
 
             if (result.Success)
             {
@@ -65,7 +72,14 @@ namespace RestApi.V1.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> ForgotPassword(ForgotPasswordCommand command, CancellationToken cancellationToken)
         {
-            var result = await _identityService.ForgotPasswordAsync(command, cancellationToken);
+            var user = await _identityService.FindUserByEmailAsync(command.Email);
+
+            if (user is null)
+            {
+                return NotFound();
+            }
+
+            var result = await _identityService.ForgotPasswordAsync(user, cancellationToken);
 
             if (result.Success)
             {
@@ -79,7 +93,14 @@ namespace RestApi.V1.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> ResetPassword(ResetPasswordCommand command)
         {
-            var result = await _identityService.ResetPasswordAsync(command);
+            var user = await _identityService.FindUserByEmailAsync(command.Email);
+
+            if (user is null)
+            {
+                return NotFound();
+            }
+
+            var result = await _identityService.ResetPasswordAsync(user, command.Token, command.Password);
 
             if (result.Success)
             {

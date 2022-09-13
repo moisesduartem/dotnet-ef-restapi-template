@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Options;
 using RestApi.Application.V1.Aggregates.Users.Commands;
 using RestApi.Application.V1.Aggregates.Users.DTOs;
@@ -11,7 +10,6 @@ using RestApi.Application.V1.Shared;
 using RestApi.Identity.Configuration;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Text;
 
 namespace RestApi.Identity.Services
 {
@@ -157,11 +155,14 @@ namespace RestApi.Identity.Services
             return claims;
         }
 
-        public async Task<Result> ConfirmEmailAsync(ConfirmEmailCommand command)
+        public Task<IdentityUser> FindUserByEmailAsync(string email)
         {
-            var user = await _userManager.FindByEmailAsync(command.Email);
+            return _userManager.FindByEmailAsync(email);
+        }
 
-            var result = await _userManager.ConfirmEmailAsync(user, command.Token);
+        public async Task<Result> ConfirmEmailAsync(IdentityUser user, string token)
+        {
+            var result = await _userManager.ConfirmEmailAsync(user, token);
 
             if (result.Succeeded)
             {
@@ -171,15 +172,13 @@ namespace RestApi.Identity.Services
             return Result.Create().Error(result.Errors.Select(x => x.Description));
         }
 
-        public async Task<Result> ForgotPasswordAsync(ForgotPasswordCommand command, CancellationToken cancellationToken)
+        public async Task<Result> ForgotPasswordAsync(IdentityUser user, CancellationToken cancellationToken)
         {
-            var user = await _userManager.FindByEmailAsync(command.Email);
-
             string token = await _userManager.GeneratePasswordResetTokenAsync(user);
 
             var mailRequest = new MailRequest
             {
-                ToEmail = command.Email,
+                ToEmail = user.Email,
                 Subject = "Reset Password",
                 TemplatePath = "ResetPassword.cshtml",
                 TemplateModel = new
@@ -193,11 +192,9 @@ namespace RestApi.Identity.Services
             return Result.Create();
         }
 
-        public async Task<Result> ResetPasswordAsync(ResetPasswordCommand command)
+        public async Task<Result> ResetPasswordAsync(IdentityUser user, string token, string password)
         {
-            var user = await _userManager.FindByEmailAsync(command.Email);
-
-            var result = await _userManager.ResetPasswordAsync(user, command.Token, command.Password);
+            var result = await _userManager.ResetPasswordAsync(user, token, password);
 
             if (result.Succeeded)
             {
