@@ -2,91 +2,44 @@
 
 namespace RestApi.Application.V1.Shared
 {
-    public interface IResult
+    public class Result
     {
-        ICollection<string> Errors { get; }
-        object? Value { get; }
-        bool IsValid { get; }
-        IResult Ok();
-        IResult Error(string message);
-        IResult Error(ICollection<string> messages);
-    }
-    
-    public interface IResult<TValue> : IResult 
-    {
-        IResult<TValue> Error<T>(string message) where T : TValue;
-        IResult<TValue> Error<T>(ICollection<string> messages) where T : TValue;
-        IResult<TValue> Ok(TValue value);
-    }
+        private readonly List<string> _errors;
 
-    public abstract class AbstractResult : IResult
-    {
-        public ICollection<string> Errors { get; protected set; }
-        public object? Value { get; protected set; }
-        protected bool Done { get; set; }
+        protected Result()
+        {
+            _errors = new List<string>();
+        }
 
         [IgnoreDataMember]
-        public bool IsValid => Errors.Count == 0;
+        public bool IsValid => _errors.Count == 0;
+        public IEnumerable<string> Errors => _errors.AsEnumerable();
 
-        protected AbstractResult()
-        {
-            Done = false;
-            Errors = new List<string>();
-            Value = null;
-        }
-
-        public virtual IResult Ok()
-        {
-            Done = true;
-            return this;
-        }
-
-        public virtual IResult Error(string message)
-        {
-            Done = true;
-            Errors.Add(message);
-            return this;
-        }
-
-        public virtual IResult Error(ICollection<string> messages)
-        {
-            Done = true;
-            Errors = messages;
-            return this;
-        }
-    }
-
-    public class Result<TValue> : AbstractResult, IResult<TValue>
-    {
-        public IResult<TValue> Error<T>(string message) where T : TValue
-        {
-            Error(message);
-            return this;
-        }
-
-        public IResult<TValue> Error<T>(ICollection<string> messages) where T : TValue
-        {
-            Error(messages);
-            return this;
-        }
-
-        public IResult<TValue> Ok(TValue value)
-        {
-            Ok(value);
-            return this;
-        }
-    }
-
-    public class Result : AbstractResult
-    {
-        public static IResult Create()
+        public static Result Create()
         {
             return new Result();
         }
 
-        public static IResult<T> Create<T>()
+        public Result Error(string message)
         {
-            return new Result<T>();
+            AddError(message);
+            return this;
+        }
+
+        public Result Error(IEnumerable<string> messages)
+        {
+            AddErrors(messages);
+            return this;
+        }
+
+        public void AddErrors(IEnumerable<string> messages)
+        {
+            _errors.AddRange(messages);
+        }
+        
+        public void AddError(string message)
+        {
+            _errors.Add(message);
         }
     }
 }
