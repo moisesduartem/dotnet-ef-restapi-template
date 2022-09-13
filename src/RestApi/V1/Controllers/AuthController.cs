@@ -74,6 +74,20 @@ namespace RestApi.V1.Controllers
 
             return BadRequest(result);
         }
+        
+        [HttpPatch("reset-password")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ResetPassword(ResetPasswordCommand command)
+        {
+            var result = await _identityService.ResetPasswordAsync(command);
+
+            if (result.Success)
+            {
+                return NoContent();
+            }
+
+            return BadRequest(result);
+        }
 
         [HttpGet("profile")]
         [Authorize]

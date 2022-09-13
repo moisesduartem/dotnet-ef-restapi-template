@@ -11,6 +11,7 @@ namespace RestApi.Application.V1.Services
         Task<Result> ForgotPasswordAsync(ForgotPasswordCommand command, CancellationToken cancellationToken);
         Task<LoggedUserDTO?> GetLoggedUserAsync();
         Task<LoginDTO> LoginAsync(LoginQuery query);
+        Task<Result> ResetPasswordAsync(ResetPasswordCommand command);
         Task<Result> RegisterAsync(RegisterUserCommand command, CancellationToken cancellationToken);
     }
 }

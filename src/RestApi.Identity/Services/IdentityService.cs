@@ -108,9 +108,7 @@ namespace RestApi.Identity.Services
                 return Result.Create();
             }
 
-            IList<string> errors = result.Errors.Select(x => x.Description).ToList();
-
-            return Result.Create().Error(errors);
+            return Result.Create().Error(result.Errors.Select(x => x.Description));
         }
 
         private async Task<LoginDTO> GenerateJsonWebTokenAsync(string email)
@@ -170,7 +168,7 @@ namespace RestApi.Identity.Services
                 return Result.Create();
             }
 
-            return Result.Create().Error($"Invalid email token for {command.Email}");
+            return Result.Create().Error(result.Errors.Select(x => x.Description));
         }
 
         public async Task<Result> ForgotPasswordAsync(ForgotPasswordCommand command, CancellationToken cancellationToken)
@@ -193,6 +191,20 @@ namespace RestApi.Identity.Services
             await _mailService.SendAsync(mailRequest, cancellationToken);
 
             return Result.Create();
+        }
+
+        public async Task<Result> ResetPasswordAsync(ResetPasswordCommand command)
+        {
+            var user = await _userManager.FindByEmailAsync(command.Email);
+
+            var result = await _userManager.ResetPasswordAsync(user, command.Token, command.Password);
+
+            if (result.Succeeded)
+            {
+                return Result.Create();
+            }
+
+            return Result.Create().Error(result.Errors.Select(x => x.Description));
         }
     }
 }
