@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RestApi.Application.V1.Aggregates.Users.Commands;
+using RestApi.Application.V1.Aggregates.Users.Constants;
 using RestApi.Application.V1.Aggregates.Users.Queries;
 using RestApi.Application.V1.Services;
 
@@ -64,15 +65,15 @@ namespace RestApi.V1.Controllers
         }
 
         [HttpGet("admin")]
-        [Authorize(Roles = "Admin")]
-        public IActionResult VerifyAdminRole()
+        [Authorize(Roles = AppRoles.Admin)]
+        public IActionResult VerifyAdminUser()
         {
             return NoContent();
         }
         
         [HttpGet("user")]
-        [Authorize(Roles = "User")]
-        public IActionResult VerifyUserRole()
+        [Authorize]
+        public IActionResult VerifyRegularUser()
         {
             return NoContent();
         }
