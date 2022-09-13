@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.OpenApi.Models;
 using RestApi.Extensions;
 using RestApi.Filters;
+using RestApi.Infra.Extensions;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,6 +25,8 @@ builder.Services.AddEFCoreConfiguration();
 
 builder.Services.AddIdentityConfiguration(builder.Configuration);
 
+builder.Services.AddEmailSenderConfiguration(builder.Configuration);
+
 builder.Services.AddDIConfiguration();
 
 builder.Services.AddFluentValidationConfiguration();
@@ -31,8 +34,6 @@ builder.Services.AddFluentValidationConfiguration();
 builder.Services.AddMediatorConfiguration();
 
 builder.Services.AddAutoMapperConfiguration();
-
-//builder.Services.AddJwtConfiguration(builder.Configuration);
 
 builder.Services.AddApiVersioning(options =>
 {

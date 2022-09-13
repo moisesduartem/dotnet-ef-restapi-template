@@ -1,5 +1,4 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RestApi.Application.V1.Aggregates.Users.Commands;
 using RestApi.Application.V1.Aggregates.Users.Constants;
@@ -13,12 +12,10 @@ namespace RestApi.V1.Controllers
     [Route("api/v1/auth")]
     public class AuthController : ControllerBase
     {
-        private readonly IMediator _mediator;
         private readonly IIdentityService _identityService;
 
-        public AuthController(IMediator mediator, IIdentityService identityService)
+        public AuthController(IIdentityService identityService)
         {
-            _mediator = mediator;
             _identityService = identityService;
         }
 

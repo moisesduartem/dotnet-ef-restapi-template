@@ -9,6 +9,9 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="11.0.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+    <PackageReference Include="FluentEmail.Core" Version="3.0.2" />
+    <PackageReference Include="FluentEmail.Razor" Version="3.0.2" />
+    <PackageReference Include="FluentEmail.Smtp" Version="3.0.2" />
     <PackageReference Include="MediatR" Version="10.0.1" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.2.0" />

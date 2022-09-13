@@ -1,6 +1,4 @@
-﻿using System.Runtime.Serialization;
-
-namespace RestApi.Application.V1.Shared
+﻿namespace RestApi.Application.V1.Shared
 {
     public class Result
     {

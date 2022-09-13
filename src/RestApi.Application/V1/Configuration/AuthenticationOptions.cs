@@ -1,4 +1,4 @@
-﻿namespace RestApi.Application.V1.Options
+﻿namespace RestApi.Application.V1.Configuration
 {
     public class AuthenticationOptions
     {
