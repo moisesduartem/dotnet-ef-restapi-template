@@ -1,5 +1,15 @@
 # dotnet-restapi-template
 
+# Usage
+
+```powershell
+git clone https://github.com/moisesduartem/dotnet-restapi-template restapi/
+
+dotnet new --install restapi/ # install the template according to .template.config/template.json
+
+dotnet new restapi -o MyApp # create a new restapi solution for MyApp
+```
+
 # Technologies
 
 ## Database
