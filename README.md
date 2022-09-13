@@ -43,14 +43,14 @@ The relational database used to create this template was **Microsoft SQL Server 
 
 These are the endpoints implemented in this API:
 
-- Sign In
-- Sign Up
-- Forgot Password
-- Reset Password
-- Confirm Email
-- Get Logged User Profile
-- Verify If Logged User Is Admin
-- Verify User Is Authorized
+- Sign in
+- Sign up
+- Forgot password
+- Reset password
+- Confirm email
+- Get logged user profile
+- Verify if the logged user is admin
+- Verify if the user is Authorized
 
 # Solution
 
