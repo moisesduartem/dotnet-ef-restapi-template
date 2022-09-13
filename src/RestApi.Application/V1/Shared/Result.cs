@@ -11,8 +11,7 @@ namespace RestApi.Application.V1.Shared
             _errors = new List<string>();
         }
 
-        [IgnoreDataMember]
-        public bool IsValid => _errors.Count == 0;
+        public bool Success => _errors.Count == 0;
         public IEnumerable<string> Errors => _errors.AsEnumerable();
 
         public static Result Create()

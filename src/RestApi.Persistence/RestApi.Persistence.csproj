@@ -17,4 +17,8 @@
     <ProjectReference Include="..\RestApi.Domain\RestApi.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Mappings\" />
+  </ItemGroup>
+
 </Project>

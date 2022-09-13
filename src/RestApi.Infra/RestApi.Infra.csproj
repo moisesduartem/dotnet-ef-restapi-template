@@ -21,4 +21,8 @@
     <ProjectReference Include="..\RestApi.Persistence\RestApi.Persistence.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Profiles\" />
+  </ItemGroup>
+
 </Project>

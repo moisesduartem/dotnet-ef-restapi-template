@@ -7,7 +7,7 @@ namespace RestApi.Persistence.Repositories
     {
         public Task<User?> GetByEmailAsync(string email, CancellationToken cancellationToken)
         {
-            var user = new User("Mr. User", "user@email.com", "username", "password123");
+            var user = new User("Mr. User", "user@email.com");
             return Task.FromResult<User?>(user);
         }
     }

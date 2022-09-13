@@ -1,9 +1,9 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using RestApi.Application.V1.Services;
-using RestApi.Application.V1.Aggregates.Users.Queries;
 using RestApi.Application.V1.Aggregates.Users.Commands;
+using RestApi.Application.V1.Aggregates.Users.Queries;
+using RestApi.Application.V1.Services;
 
 namespace RestApi.V1.Controllers
 {
@@ -25,13 +25,13 @@ namespace RestApi.V1.Controllers
 
         [HttpPost("login")]
         [AllowAnonymous]
-        public async Task<IActionResult> Login(LoginQuery query, CancellationToken cancellationToken)
+        public async Task<IActionResult> Login(LoginQuery query)
         {
-            var result = await _mediator.Send(query, cancellationToken);
+            var result = await _identityService.LoginAsync(query);
 
-            if (result.IsValid)
+            if (result.Success)
             {
-                return Ok(result.Value);
+                return Ok(result);
             }
 
             return BadRequest(result);
@@ -39,11 +39,11 @@ namespace RestApi.V1.Controllers
 
         [HttpPost("register")]
         [AllowAnonymous]
-        public async Task<IActionResult> Register(RegisterUserCommand command, CancellationToken cancellationToken)
+        public async Task<IActionResult> Register(RegisterUserCommand command)
         {
             var result = await _identityService.RegisterAsync(command);
 
-            if (result.IsValid)
+            if (result.Success)
             {
                 return StatusCode(StatusCodes.Status201Created);
             }

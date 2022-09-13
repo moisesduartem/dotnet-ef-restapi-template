@@ -7,7 +7,7 @@ namespace RestApi.Application.V1.Services
 {
     public interface IIdentityService
     {
-        Task<IResult> RegisterAsync(RegisterUserCommand command);
-        Task<IResult<LoginDTO>> Login(LoginQuery query);
+        Task<Result> RegisterAsync(RegisterUserCommand command);
+        Task<LoginDTO> LoginAsync(LoginQuery query);
     }
 }
