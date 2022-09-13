@@ -124,14 +124,14 @@ namespace RestApi.V1.Controllers
             return BadRequest(user);
         }
 
-        [HttpGet("admin")]
+        [HttpGet("is-admin")]
         [Authorize(Roles = AppRoles.Admin)]
         public IActionResult VerifyAdminUser()
         {
             return NoContent();
         }
         
-        [HttpGet("user")]
+        [HttpGet("is-logged")]
         [Authorize]
         public IActionResult VerifyRegularUser()
         {
