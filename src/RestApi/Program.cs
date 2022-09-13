@@ -1,10 +1,14 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json.Linq;
 using RestApi.Extensions;
 using RestApi.Filters;
 using RestApi.Infra.Extensions;
 using Serilog;
+using static System.Net.Mime.MediaTypeNames;
+using System.Diagnostics.Metrics;
+using System.Reflection.Metadata;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -47,10 +51,8 @@ builder.Services.AddApiVersioning(options =>
 });
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(options =>
-{
-    options.SwaggerDoc("v1", new OpenApiInfo { Version = "v1", Title = "RestApi" });
-});
+
+builder.Services.AddSwaggerGenConfiguration();
 
 var app = builder.Build();
 
