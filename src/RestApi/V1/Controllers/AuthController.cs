@@ -69,7 +69,7 @@ namespace RestApi.V1.Controllers
         }
 
         [HttpPatch("confirm-email")]
-        [AllowAnonymous]
+        [Authorize]
         public async Task<IActionResult> ConfirmEmail(ConfirmEmailCommand command)
         {
             var user = await _identityService.FindUserByEmailAsync(command.Email);

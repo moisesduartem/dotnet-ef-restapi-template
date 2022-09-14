@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
+using RestApi.Application.Models;
 using RestApi.Application.V1.Aggregates.Users.Commands;
 using RestApi.Application.V1.Aggregates.Users.DTOs;
 using RestApi.Application.V1.Aggregates.Users.Queries;
@@ -15,13 +16,13 @@ namespace RestApi.Identity.Services
 {
     public class IdentityService : IIdentityService
     {
-        private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<RestApiUser> _signInManager;
+        private readonly UserManager<RestApiUser> _userManager;
         private readonly JwtOptions _jwtOptions;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IMailService _mailService;
 
-        public IdentityService(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager, IOptions<JwtOptions> jwtOptions, IHttpContextAccessor httpContextAccessor, IMailService mailService)
+        public IdentityService(SignInManager<RestApiUser> signInManager, UserManager<RestApiUser> userManager, IOptions<JwtOptions> jwtOptions, IHttpContextAccessor httpContextAccessor, IMailService mailService)
         {
             _signInManager = signInManager;
             _userManager = userManager;
@@ -30,7 +31,7 @@ namespace RestApi.Identity.Services
             _mailService = mailService;
         }
 
-        private async Task SendVerificationEmailAsync(IdentityUser user, CancellationToken cancellationToken)
+        private async Task SendVerificationEmailAsync(RestApiUser user, CancellationToken cancellationToken)
         {
             string token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
 
@@ -88,7 +89,7 @@ namespace RestApi.Identity.Services
 
         public async Task<Result> RegisterAsync(RegisterUserCommand command, CancellationToken cancellationToken)
         {
-            var identityUser = new IdentityUser
+            var identityUser = new RestApiUser
             {
                 UserName = command.Email,
                 Email = command.Email,
@@ -136,12 +137,12 @@ namespace RestApi.Identity.Services
             };
         }
 
-        private async Task<IList<Claim>> GetClaimsAsync(IdentityUser user)
+        private async Task<IList<Claim>> GetClaimsAsync(RestApiUser user)
         {
             var claims = await _userManager.GetClaimsAsync(user);
             var roles = await _userManager.GetRolesAsync(user);
 
-            claims.Add(new Claim(JwtRegisteredClaimNames.Sub, user.Id));
+            claims.Add(new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()));
             claims.Add(new Claim(JwtRegisteredClaimNames.Email, user.Email));
             claims.Add(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()));
             claims.Add(new Claim(JwtRegisteredClaimNames.Nbf, DateTime.Now.ToString()));
@@ -155,12 +156,12 @@ namespace RestApi.Identity.Services
             return claims;
         }
 
-        public Task<IdentityUser> FindUserByEmailAsync(string email)
+        public Task<RestApiUser> FindUserByEmailAsync(string email)
         {
             return _userManager.FindByEmailAsync(email);
         }
 
-        public async Task<Result> ConfirmEmailAsync(IdentityUser user, string token)
+        public async Task<Result> ConfirmEmailAsync(RestApiUser user, string token)
         {
             var result = await _userManager.ConfirmEmailAsync(user, token);
 
@@ -172,7 +173,7 @@ namespace RestApi.Identity.Services
             return Result.Create().Error(result.Errors.Select(x => x.Description));
         }
 
-        public async Task<Result> ForgotPasswordAsync(IdentityUser user, CancellationToken cancellationToken)
+        public async Task<Result> ForgotPasswordAsync(RestApiUser user, CancellationToken cancellationToken)
         {
             string token = await _userManager.GeneratePasswordResetTokenAsync(user);
 
@@ -192,7 +193,7 @@ namespace RestApi.Identity.Services
             return Result.Create();
         }
 
-        public async Task<Result> ResetPasswordAsync(IdentityUser user, string token, string password)
+        public async Task<Result> ResetPasswordAsync(RestApiUser user, string token, string password)
         {
             var result = await _userManager.ResetPasswordAsync(user, token, password);
 

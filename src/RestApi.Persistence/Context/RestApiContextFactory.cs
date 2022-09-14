@@ -5,19 +5,19 @@ using RestApi.Persistence.Factories;
 
 namespace RestApi.Persistence.Context
 {
-    public class AppContextFactory : IDesignTimeDbContextFactory<AppContext>
+    internal class RestApiContextFactory : IDesignTimeDbContextFactory<RestApiContext>
     {
-        public AppContext CreateDbContext(string[] args)
+        public RestApiContext CreateDbContext(string[] args)
         {
             var configuration = ConfigurationManagerFactory.Get();
 
-            var builder = new DbContextOptionsBuilder<AppContext>();
+            var builder = new DbContextOptionsBuilder<RestApiContext>();
 
             var connectionString = configuration.GetConnectionString("DefaultConnection");
 
             builder.UseSqlServer(connectionString);
 
-            return new AppContext(builder.Options);
+            return new RestApiContext(builder.Options);
         }
     }
 }

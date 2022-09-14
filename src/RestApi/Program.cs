@@ -10,9 +10,7 @@ builder.Services.AddControllersConfiguration();
 
 builder.Services.AddDIConfiguration();
 
-builder.Services.AddEFCoreConfiguration();
-
-builder.Services.AddIdentityConfiguration(builder.Configuration);
+builder.Services.AddIdentityAndEntityFramework(builder.Configuration);
 
 builder.Services.AddEmailSenderConfiguration(builder.Configuration);
 
