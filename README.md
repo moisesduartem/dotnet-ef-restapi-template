@@ -1,9 +1,9 @@
-# dotnet-restapi-template
+# dotnet-ef-restapi-template
 
 # Usage
 
 ```powershell
-git clone https://github.com/moisesduartem/dotnet-restapi-template restapi/
+git clone https://github.com/moisesduartem/dotnet-ef-restapi-template restapi/
 
 dotnet new --install restapi/ # install the template according to .template.config/template.json
 
